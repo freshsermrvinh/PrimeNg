@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {MenuItem} from 'primeng/api';
+import { DataService } from './data.service';
 
 
 @Component({
@@ -10,6 +11,11 @@ import {MenuItem} from 'primeng/api';
 export class AppComponent {
   title = 'PrimeNg';
   items: MenuItem[]=[];
+  public notes = null;
+  public selectedNote: any;
+
+
+  constructor(private dataService: DataService){}
 
     ngOnInit() {
         this.items = [
@@ -36,5 +42,16 @@ export class AppComponent {
                 ]
             }
         ];
+
+        // this.items=[];
+        this.dataService.getNotes(1).subscribe(data=>{
+            this.notes =data;
+        })
+
+        
     }
+    public editNote(note: any) {
+        console.log('edit note', note);
+        this.selectedNote = note;
+      }
 }
